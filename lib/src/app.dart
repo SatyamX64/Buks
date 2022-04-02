@@ -45,9 +45,10 @@ class MyApp extends StatelessWidget {
       // preferred ThemeMode (light, dark, or system default) from the
       // SettingsController to display the correct theme.
       theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
 
       initialRoute: CollectionView.routeName,
+
+      debugShowCheckedModeBanner: false,
 
       // Define a function to handle named routes in order to support
       // Flutter web url navigation and deep linking.
@@ -58,11 +59,17 @@ class MyApp extends StatelessWidget {
             switch (routeSettings.name) {
               case CollectionView.routeName:
                 return CollectionView(
-                    CollectionController(const CollectionService('uid')));
+                  CollectionController(
+                    const MockCollectionService('uid'),
+                  ),
+                );
 
               default:
-                return CollectionView(CollectionController(
-                    CollectionService(routeSettings.name!)));
+                return const Scaffold(
+                  body: Center(
+                    child: Text('No Route defined'),
+                  ),
+                );
             }
           },
         );

@@ -59,19 +59,19 @@ class CollectionController with ChangeNotifier {
     final index = _collection.books.indexOf(book);
     final updatedBooks = [..._collection.books]
       ..removeAt(index)
-      ..insert(index,book.copyWith(id: id));
+      ..insert(index, book.copyWith(id: id));
     _collection = _collection.copyWith(books: updatedBooks);
 
     // Important! Inform listeners a change has occurred.
     notifyListeners();
   }
 
-  Future<void> removeBook(String id) async {
+  Future<void> removeBook(Book book) async {
     // Do not perform any work if the book doesn't exists
-    if (!_collection.books.any((book) => book.id == id)) return;
+    if (!_collection.books.contains(book)) return;
 
     // Otherwise, delete the Book from memory
-    final books = [..._collection.books]..removeWhere((book) => book.id == id);
+    final books = [..._collection.books]..remove(book);
     _collection = _collection.copyWith(books: books);
 
     // Important! Inform listeners a change has occurred.
@@ -79,12 +79,12 @@ class CollectionController with ChangeNotifier {
 
     // Persist the changes to a local database or the internet using the
     // CollectionService.
-    await _collectionService.removeBook(id);
+    await _collectionService.removeBook(book.id);
   }
 
   Future<void> modifyBook(Book book) async {
     // Find if book exists, and store its index
-    final index = _collection.books.indexWhere((b) => b.id == book.id);
+    final index = _collection.books.indexOf(book);
 
     // Do not perform any work if the book doesn't exists
     if (index == -1) return;
@@ -104,7 +104,7 @@ class CollectionController with ChangeNotifier {
   /// Adds a new child collection to the Collection
   Future<void> addCollection(Collection collection) async {
     // Do not perform any work if child collection already exists
-    if (_collection.collectionIDs.any((c) => c == collection.id)) return;
+    if (_collection.collectionIDs.contains(collection.id)) return;
 
     // Otherwise, store the new collection in Memory
     _collections.add(collection);
@@ -133,7 +133,7 @@ class CollectionController with ChangeNotifier {
 
   Future<void> removeCollection(String id) async {
     // Do not perform any work if the child collection doesn't exists
-    if (!_collection.collectionIDs.any((c) => c == id)) {
+    if (!_collection.collectionIDs.contains(id)) {
       return;
     }
 
@@ -166,20 +166,20 @@ class CollectionController with ChangeNotifier {
     await _collectionService.updateName(name);
   }
 
-  Future<void> updateColor(String color) async {
-    // Do not perform any work if the color is same as current one
-    if (_collection.color == color) {
-      return;
-    }
+  // Future<void> updateColor(String color) async {
+  //   // Do not perform any work if the color is same as current one
+  //   if (_collection.color == color) {
+  //     return;
+  //   }
 
-    // Otherwise change the color
-    _collection = _collection.copyWith(color: color);
+  //   // Otherwise change the color
+  //   _collection = _collection.copyWith(color: color);
 
-    // Important! Inform listeners a change has occurred.
-    notifyListeners();
+  //   // Important! Inform listeners a change has occurred.
+  //   notifyListeners();
 
-    // Persist the changes to a local database or the internet using the
-    // CollectionService.
-    await _collectionService.updateColor(color);
-  }
+  //   // Persist the changes to a local database or the internet using the
+  //   // CollectionService.
+  //   await _collectionService.updateColor(color);
+  // }
 }

@@ -31,7 +31,7 @@ class BookList extends StatelessWidget {
               children: [
                 TextButton(
                     onPressed: () {
-                      collectionController.removeBook(item.id);
+                      collectionController.removeBook(item);
                     },
                     child: const Text('Delete')),
                 TextButton(onPressed: () {}, child: const Text('Modify')),
