@@ -1,4 +1,7 @@
+import 'package:biblio/src/presentation/views/auth/auth_view.dart';
 import 'package:biblio/src/presentation/views/collection/collection_view.dart';
+import 'package:biblio/src/presentation/views/onboarding/onboarding_view.dart';
+import 'package:biblio/src/presentation/views/splash/splash_view.dart';
 import 'package:biblio/src/services/collections/collection_controller.dart';
 import 'package:biblio/src/services/collections/collection_service.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +49,7 @@ class MyApp extends StatelessWidget {
       // SettingsController to display the correct theme.
       theme: ThemeData(),
 
-      initialRoute: CollectionView.routeName,
+      initialRoute: OnBoardingView.routeName,
 
       debugShowCheckedModeBanner: false,
 
@@ -63,7 +66,12 @@ class MyApp extends StatelessWidget {
                     const MockCollectionService('uid'),
                   ),
                 );
-
+              case SplashView.routeName:
+                return const SplashView();
+              case OnBoardingView.routeName:
+                return const OnBoardingView();
+              case AuthView.routeName:
+                return const AuthView();
               default:
                 return const Scaffold(
                   body: Center(
