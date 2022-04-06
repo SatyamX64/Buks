@@ -11,8 +11,9 @@ import 'package:biblio/src/models/book.dart';
 // http package to persist settings over the network.
 
 abstract class CollectionService {
-  final String id;
-  const CollectionService(this.id);
+  factory CollectionService(String id) {
+    return MockCollectionService(id);
+  }
 
   /// Returns Collection for the ID specified to Service
   Future<Collection> collection();
@@ -56,15 +57,14 @@ abstract class CollectionService {
 }
 
 class MockCollectionService implements CollectionService {
-  @override
-  final String id;
-  const MockCollectionService(this.id);
+  final String _id;
+  MockCollectionService(this._id);
 
   @override
   Future<Collection> collection() async {
     await Future.delayed(const Duration(milliseconds: 2000));
     return Collection(
-        id, 'Library', 'I store all my books here', <String>[], <Book>[]);
+        _id, 'Library', 'I store all my books here', <String>[], <Book>[]);
   }
 
   @override
@@ -113,7 +113,8 @@ class MockCollectionService implements CollectionService {
     await Future.delayed(const Duration(milliseconds: 2000));
     return List.generate(
       ids.length,
-      (index) => Collection(id, 'Library', 'I store all my books here', [], []),
+      (index) =>
+          Collection(_id, 'Library', 'I store all my books here', [], []),
     );
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../shared/utils/color.dart';
 import '../../shared/utils/font.dart';
-import '../auth/auth_view.dart';
+import '../auth/sc_auth.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({Key? key}) : super(key: key);
@@ -112,7 +112,9 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 AnimatedPositioned(
                   left: 0,
                   right: 0,
-                  top: isLastPage ? 0 : 140,
+                  top: isLastPage
+                      ? 0
+                      : MediaQuery.of(context).size.height * 0.15,
                   child: Center(
                     child: FloatingActionButton.extended(
                       onPressed: finishOnBoarding,
@@ -158,7 +160,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   }
 
   void finishOnBoarding() {
-    Navigator.pushReplacementNamed(context, AuthView.routeName);
+    Navigator.pushNamed(context, AuthView.routeName);
   }
 }
 
