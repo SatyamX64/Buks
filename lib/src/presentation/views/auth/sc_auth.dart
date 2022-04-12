@@ -5,7 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthView extends StatelessWidget {
   const AuthView({Key? key}) : super(key: key);
-
+  // TODO :
+  // Add login bloc
+  // Add register bloc
+  // Make UI for screen (with two inscreen components for login/ register)
+  //
   static const routeName = '/auth';
   @override
   Widget build(BuildContext context) {
